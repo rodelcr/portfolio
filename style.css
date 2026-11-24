@@ -1,0 +1,147 @@
+/* Light is the default tone; [data-theme="dark"] switches. */
+:root { --bg: #fff; --fg: #141414; --muted: #6a6a6a; --veil: rgba(255,255,255,.72); --line: #ddd; --slot: #fff1a8; --slotfg: #3d3300; --side: 19rem; color-scheme: light; }
+[data-theme="dark"] { --bg: #0e0e0e; --fg: #ececec; --muted: #a2a2a2; --veil: rgba(14,14,14,.50); --line: #333; --slot: #4d4310; --slotfg: #ffef9e; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 18px/1.5 "EB Garamond", Garamond, "Noto Sans Osage", "Times New Roman", serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+.os { font-family: "Noto Sans Osage", "EB Garamond", serif; font-size: .9em; }
+.os, .w { white-space: nowrap; }
+.sep { opacity: .55; }
+mark.slot { background: var(--slot); color: var(--slotfg); }
+
+/* The column: solid, so nothing shows through as photographs pass beneath it */
+.side { position: fixed; inset: 0 auto 0 0; width: var(--side); z-index: 5; display: flex; flex-direction: column; padding: 2.6rem 1.5rem 1.8rem 2.4rem;
+  background: var(--bg); }
+.brand { font-size: 1.5rem; font-weight: 500; line-height: 1.15; white-space: nowrap; }
+#menu { display: none; }
+.side ul { list-style: none; margin: 2.6rem 0 0; padding: 0; }
+.side li { margin: 0 0 .5rem; white-space: nowrap; }
+.side nav a, .side nav button { position: relative; transition: opacity .3s; opacity: .88; }
+.side nav a:hover, .side nav button:hover, .side nav [aria-current] { opacity: 1; }
+.side nav a::after { content: ""; position: absolute; left: 0; bottom: -2px; height: 1px; width: 100%; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.side nav a:hover::after, .side nav [aria-current]::after { transform: scaleX(1); }
+.side .minor { margin-top: 1.6rem; }
+.note { margin-top: auto; }
+.note p { margin: 0; }
+#cap { font-size: 1rem; line-height: 1.4; }
+#count { font-size: .9rem; opacity: .8; margin-top: .5rem; font-variant-numeric: oldstyle-nums; }
+.copy { font-size: .85rem; opacity: .8; margin: 1rem 0 0; white-space: nowrap; }
+body:not(.series) .copy { margin-top: auto; }
+
+@media (min-width: 561px) {
+  /* Series: one full-height strip */
+  .series, .home { overflow: hidden; }
+  .strip { display: flex; height: 100vh; height: 100dvh; overflow-x: auto; overflow-y: hidden; padding-left: var(--side); scrollbar-width: none; outline: none; cursor: grab; }
+  .strip::-webkit-scrollbar { display: none; }
+  .strip.drag { cursor: grabbing; }
+  .strip > * { flex: none; height: 100%; }
+  .ph { margin: 0; width: calc(100vh * var(--r)); width: calc(100dvh * var(--r)); overflow: hidden; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph figcaption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tx { width: 34rem; max-width: 60vw; padding: 8vh 4.5rem; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; cursor: auto; }
+  .tx h1 { font-size: clamp(1.8rem, 2.5vw, 2.3rem); white-space: nowrap; }
+  .tx.intro { width: 42rem; }
+  .tx p { font-size: 1.25rem; line-height: 1.55; max-width: 27rem; }
+  .tx.wide { width: 40rem; justify-content: safe center; }
+  .next { position: relative; width: 62vh; overflow: hidden; }
+  .next img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.6s cubic-bezier(.2,.7,.2,1); }
+  .next:hover img { transform: scale(1.04); }
+  #prog { position: fixed; left: var(--side); right: 0; bottom: 0; height: 2px; background: var(--fg); transform: scaleX(0); transform-origin: left; z-index: 6; opacity: .6; }
+  /* Home: the series side by side, opening as you move across */
+  .slices { display: flex; height: 100vh; height: 100dvh; padding-left: var(--side); }
+  .slice { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; transition: flex-grow .9s cubic-bezier(.2,.7,.2,1); }
+  .slice img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .slice:hover, .slice:focus-visible { flex-grow: 3.2; }
+}
+.tx h1, .tx h2 { font-weight: 400; margin: 0 0 .4rem; line-height: 1.2; }
+.tx h2 { font-size: 1.7rem; margin-top: 1.6rem; }
+.tx h2:first-child { margin-top: 0; }
+.tx .meta { color: var(--muted); font-style: italic; font-size: 1.05rem; margin: 0 0 1rem; }
+.tx ul { list-style: none; padding: 0; margin: .6rem 0 0; }
+.tx li { margin-bottom: .7rem; line-height: 1.35; }
+.tx a:hover, .page a:hover { text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px; }
+.slice > span, .next > span { position: absolute; left: 0; right: 0; bottom: 0; padding: 7rem 1.3rem 1.6rem; color: #fff; font-size: 1.12rem; white-space: nowrap; background: linear-gradient(to top, rgba(0,0,0,.62), transparent); }
+.next > span { font-size: 1.6rem; padding-left: 2rem; }
+.page { max-width: 42rem; padding: 6rem 2rem 4rem 4.5rem; margin-left: var(--side); }
+.page h1 { font-weight: 400; font-size: 2.3rem; margin: 0 0 1rem; }
+.page p { font-size: 1.2rem; }
+.page .lead { font-style: italic; font-size: 1.4rem; }
+
+/* No entrance effects. A photo that is not ready yet holds its own average color, then appears once, whole. */
+.ph, .slice, .next { background-color: var(--c, transparent); }
+.ph img.wait { opacity: 0; }
+
+/* Phones: stacked */
+@media (max-width: 560px) {
+  .side { position: sticky; inset: 0 0 auto; width: auto; padding: .9rem 1.25rem; }
+  .bar { display: flex; justify-content: space-between; align-items: baseline; }
+  .brand { font-size: 1.25rem; } #menu { display: block; }
+  .side nav { display: none; padding: .4rem 0 .6rem; } .side.open nav { display: block; }
+  .side ul { margin-top: .8rem; } .note, .copy { display: none; }
+  .ph { margin: 0 0 1.4rem; } .ph img { width: 100%; height: auto; display: block; }
+  .ph figcaption { padding: .5rem 1.25rem 0; font-size: .98rem; color: var(--muted); }
+  .tx { padding: 1.5rem 1.25rem 3rem; } .tx h1 { font-size: clamp(1.25rem, 6vw, 1.8rem); white-space: nowrap; }
+  .slice, .next { position: relative; display: block; } .slice img, .next img { width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block; }
+  .slice > span, .next > span { padding: 4rem 1.25rem 1rem; font-size: 1.2rem; }
+  .page { margin: 0; padding: 2rem 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Narrow windows: still sideways, with a slimmer column */
+@media (min-width: 561px) and (max-width: 1000px) {
+  :root { --side: 13.5rem; }
+  body { font-size: 16px; }
+  .side { padding: 1.6rem .8rem 1.2rem 1.2rem; }
+  .brand { font-size: 1.2rem; }
+  .side ul { margin-top: 1.6rem; }
+  .tx, .tx.intro, .tx.wide { width: 24rem; max-width: none; padding: 6vh 2rem; }
+  .tx h1 { font-size: 1.4rem; }
+  .slice > span { font-size: .95rem; padding: 5rem .6rem 1rem; white-space: normal; }
+  .page { padding: 3rem 1.5rem; }
+}
+@media (min-width: 561px) and (max-width: 2100px) {
+  /* Slim covers: the title runs up the side, still one line */
+  .slice > span { top: 0; padding: 1.2rem 0 1.2rem .5rem; white-space: nowrap; writing-mode: vertical-rl; text-orientation: sideways; transform: rotate(180deg); display: flex; align-items: center; gap: .35em; justify-content: flex-start; background: linear-gradient(to right, transparent 25%, rgba(0,0,0,.68)); }
+}
+.slice > span, .next > span { text-shadow: 0 0 10px rgba(0,0,0,.65), 0 0 2px rgba(0,0,0,.5); }
+.free { font-size: .95rem; } .free a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+.tx.wide li p, .tx.wide li { font-size: 1.05rem; }
+
+/* One photo fills the window */
+.ph img { cursor: zoom-in; } .strip.drag .ph img { cursor: grabbing; }
+#fs[hidden] { display: none; }
+#fs { position: fixed; inset: 0; z-index: 50; background: #000; color: #ddd; outline: none; cursor: zoom-out; }
+#fs img { width: 100%; height: 100%; object-fit: contain; display: block; }
+#fs p { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 3rem 2rem 1rem; text-align: center; font-size: 1rem; text-shadow: 0 0 8px #000, 0 0 2px #000; pointer-events: none; opacity: 0; transition: opacity .25s; }
+#fs:hover p, #fs:focus-within p, #fs:focus p { opacity: 1; }
+#fs button { position: absolute; }
+#fs .x { top: 1.1rem; right: 1.1rem; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: rgba(0,0,0,.45); transition: background .2s; z-index: 2; }
+#fs .x:hover { background: rgba(0,0,0,.8); }
+#fs .pv, #fs .nx { top: 4rem; bottom: 4rem; width: 22%; } #fs .pv { left: 0; cursor: w-resize; } #fs .nx { right: 0; cursor: e-resize; }
+#fs.first .pv, #fs.last .nx { display: none; }
+html.fs, html.fs body { overflow: hidden; }
+@media (hover: none) { #fs p { opacity: 1; } }
+
+/* Content note */
+.ph[hidden] { display: none; }
+.cn { color: var(--muted); font-style: italic; }
+.tx.gate { width: 30rem; }
+#reveal { border: 1px solid currentColor; padding: .45rem 1rem; } #reveal:hover { background: var(--fg); color: var(--bg); }
+
+/* Space between photographs */
+@media (min-width: 561px) { .strip { gap: 14px; } }
+/* Zoom */
+#fs .zm { position: absolute; top: 1.1rem; right: 4.6rem; height: 46px; padding: 0 1rem; display: flex; align-items: center; gap: .6rem; border-radius: 23px; color: #fff; background: rgba(0,0,0,.45); z-index: 2; cursor: default; }
+#fs .zm input { -webkit-appearance: none; appearance: none; width: 130px; height: 20px; background: transparent; cursor: pointer; }
+#fs .zm input::-webkit-slider-runnable-track { height: 1px; background: #fff; } #fs .zm input::-moz-range-track { height: 1px; background: #fff; }
+#fs .zm input::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -6.5px; border-radius: 50%; background: #fff; }
+#fs .zm input::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; }
+#fs.zoomed { cursor: grab; overflow: hidden; touch-action: none; } #fs.zoomed:active { cursor: grabbing; } #fs.zoomed .pv, #fs.zoomed .nx, #fs.zoomed p { display: none; }
+#fs { overflow: hidden; }
+
+/* Science: back to the main site */
+.side nav a.science { display: inline-block; border: 1px solid currentColor; padding: .25rem .9rem; opacity: 1; } .side nav a.science::after { display: none; }
+.side nav a.science:hover { background: var(--fg); color: var(--bg); }
